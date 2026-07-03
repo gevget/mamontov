@@ -1,0 +1,6 @@
+{
+  "name": "ArchiBuild Premium",
+  "description": "High-end architectural renovation and interior design construction company.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

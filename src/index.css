@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+:root {
+  --editor-color-brand-primary: #FFFFFF;
+  --editor-color-brand-warm: #F7F6F2;
+  --editor-color-brand-secondary: #F1EFEA;
+  --editor-color-brand-text: #111111;
+  --editor-color-brand-muted: #6D6D6D;
+  --editor-color-brand-border: #E6E2DA;
+  --editor-color-brand-dark: #0D0D0D;
+  --editor-color-brand-accent: #B4DE00;
+  --editor-color-brand-accent-hover: #C5F300;
+  --editor-display-size-max: 110px;
+  --editor-heading-size-max: 64px;
+  --editor-lead-size: 20px;
+  --editor-body-size: 16px;
+}
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+
+  --color-brand-primary: var(--editor-color-brand-primary);
+  --color-brand-warm: var(--editor-color-brand-warm);
+  --color-brand-secondary: var(--editor-color-brand-secondary);
+  --color-brand-text: var(--editor-color-brand-text);
+  --color-brand-muted: var(--editor-color-brand-muted);
+  --color-brand-border: var(--editor-color-brand-border);
+  --color-brand-dark: var(--editor-color-brand-dark);
+  --color-brand-accent: var(--editor-color-brand-accent);
+  --color-brand-accent-hover: var(--editor-color-brand-accent-hover);
+}
+
+@layer base {
+  body {
+    @apply bg-brand-primary text-brand-text font-sans antialiased;
+    font-size: var(--editor-body-size);
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
+}
+
+[data-editor-size="display"] {
+  font-size: clamp(3.5rem, 8vw, var(--editor-display-size-max)) !important;
+}
+
+[data-editor-size="heading"] {
+  font-size: clamp(2.25rem, 5vw, var(--editor-heading-size-max)) !important;
+}
+
+[data-editor-size="lead"] {
+  font-size: var(--editor-lead-size) !important;
+}
+
+[data-editor-size="body"] {
+  font-size: var(--editor-body-size) !important;
+}
