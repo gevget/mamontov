@@ -41,6 +41,7 @@ const SiteEditorContext = createContext<SiteEditorContextValue | null>(null);
 const SESSION_STORAGE_TOKEN_KEY = 'site-editor-token';
 const LOCAL_STORAGE_EDITOR_KEY = 'site-editor-enabled';
 const LOCAL_STORAGE_ELEMENT_OVERRIDES_KEY = 'site-editor-element-overrides';
+const VISUAL_EDITOR_AVAILABLE = import.meta.env.DEV || import.meta.env.VITE_ENABLE_VISUAL_EDITOR === 'true';
 
 const applyTheme = (theme: SiteTheme) => {
   const root = document.documentElement;
@@ -105,17 +106,24 @@ export const SiteEditorProvider = ({ children }: { children: ReactNode }) => {
   const [saveError, setSaveError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!VISUAL_EDITOR_AVAILABLE) {
+      window.localStorage.removeItem(LOCAL_STORAGE_EDITOR_KEY);
+      window.localStorage.removeItem(LOCAL_STORAGE_ELEMENT_OVERRIDES_KEY);
+    }
+
     const params = new URLSearchParams(window.location.search);
     const enabledFromQuery = params.get('editor') === '1';
     const enabledFromStorage = window.localStorage.getItem(LOCAL_STORAGE_EDITOR_KEY) === 'true';
-    const nextEnabled = enabledFromQuery || enabledFromStorage;
+    const nextEnabled = VISUAL_EDITOR_AVAILABLE && (enabledFromQuery || enabledFromStorage);
 
     setEditorEnabledState(nextEnabled);
     if (nextEnabled) {
       window.localStorage.setItem(LOCAL_STORAGE_EDITOR_KEY, 'true');
     }
 
-    const savedOverrides = window.localStorage.getItem(LOCAL_STORAGE_ELEMENT_OVERRIDES_KEY);
+    const savedOverrides = VISUAL_EDITOR_AVAILABLE
+      ? window.localStorage.getItem(LOCAL_STORAGE_ELEMENT_OVERRIDES_KEY)
+      : null;
     if (savedOverrides) {
       try {
         setElementOverrides(JSON.parse(savedOverrides) as Record<string, VisualElementOverride>);
@@ -162,6 +170,11 @@ export const SiteEditorProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const setEditorEnabled = (enabled: boolean) => {
+    if (!VISUAL_EDITOR_AVAILABLE) {
+      setEditorEnabledState(false);
+      return;
+    }
+
     setEditorEnabledState(enabled);
     if (enabled) {
       window.localStorage.setItem(LOCAL_STORAGE_EDITOR_KEY, 'true');
@@ -172,6 +185,10 @@ export const SiteEditorProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const updateElementOverride = (selector: string, patch: Partial<VisualElementOverride>) => {
+    if (!VISUAL_EDITOR_AVAILABLE) {
+      return;
+    }
+
     setElementOverrides((current) => {
       const next = {
         ...current,
@@ -187,6 +204,10 @@ export const SiteEditorProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const removeElementOverride = (selector: string) => {
+    if (!VISUAL_EDITOR_AVAILABLE) {
+      return;
+    }
+
     setElementOverrides((current) => {
       const next = { ...current };
       delete next[selector];
@@ -196,6 +217,10 @@ export const SiteEditorProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const resetElementOverrides = () => {
+    if (!VISUAL_EDITOR_AVAILABLE) {
+      return;
+    }
+
     setElementOverrides({});
     window.localStorage.removeItem(LOCAL_STORAGE_ELEMENT_OVERRIDES_KEY);
   };

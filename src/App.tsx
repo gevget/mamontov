@@ -38,6 +38,7 @@ function ScrollToTop() {
 
 export default function App() {
   const Router = import.meta.env.PROD && import.meta.env.BASE_URL !== '/' ? HashRouter : BrowserRouter;
+  const visualEditorAvailable = import.meta.env.DEV || import.meta.env.VITE_ENABLE_VISUAL_EDITOR === 'true';
 
   return (
     <ModalProvider>
@@ -65,9 +66,13 @@ export default function App() {
             <Footer />
           </div>
           <LeadModal />
-          <EditorLauncher />
-          <InlineVisualEditor />
-          <VisualEditor />
+          {visualEditorAvailable && (
+            <>
+              <EditorLauncher />
+              <InlineVisualEditor />
+              <VisualEditor />
+            </>
+          )}
         </SiteEditorProvider>
       </Router>
     </ModalProvider>
