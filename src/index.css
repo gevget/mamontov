@@ -80,6 +80,12 @@
   align-self: end;
 }
 
+.partners-hero-title {
+  max-width: 14ch;
+  line-height: 0.88;
+  text-wrap: normal;
+}
+
 .text-5xl.md\:text-8xl.font-bold.uppercase.tracking-tighter.leading-\[0\.85\],
 .text-5xl.md\:text-7xl.font-bold.uppercase.tracking-tighter.leading-none,
 .text-6xl.md\:text-9xl.font-bold.uppercase.tracking-tighter.leading-\[0\.8\],
@@ -100,10 +106,20 @@
     grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
   }
 
+  .partners-hero-grid {
+    grid-template-columns: minmax(0, 1.55fr) minmax(240px, 0.45fr);
+    gap: 4rem;
+  }
+
   .page-hero-aside {
     justify-self: end;
     width: 100%;
     max-width: 24rem;
+  }
+
+  .partners-hero-title {
+    font-size: clamp(3.2rem, 4.8vw, 5.8rem);
+    max-width: 15ch;
   }
 
   .grid.grid-cols-1.lg\:grid-cols-2.gap-20.mb-40.items-end,

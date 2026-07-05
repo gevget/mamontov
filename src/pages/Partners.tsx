@@ -36,9 +36,12 @@ export const Partners = () => {
       <Container>
         <Breadcrumbs items={[{ name: 'Партнеры' }]} />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 mb-40 items-end">
+        <div className="page-hero-grid partners-hero-grid">
           <div className="space-y-8">
-            <h1 className="text-5xl md:text-8xl font-bold uppercase tracking-tighter leading-[0.85]">Для дизайнеров <br />и архитекторов</h1>
+            <h1 className="page-hero-title partners-hero-title font-bold uppercase tracking-tighter">
+              <span className="block">Для дизайнеров</span>
+              <span className="block whitespace-nowrap">и архитекторов</span>
+            </h1>
             <p className="text-xl text-brand-muted font-light leading-relaxed max-w-xl">
               Аккуратно реализуем дизайн-проекты, соблюдаем чертежи, согласуем изменения и сохраняем авторскую идею на объекте.
             </p>
@@ -47,7 +50,7 @@ export const Partners = () => {
               <Button variant="outline" href="/projects">Смотреть проекты</Button>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-y-6 pb-2">
+          <div className="page-hero-aside grid grid-cols-2 gap-y-6 pb-2">
             {PARTNER_MARKERS.map(([marker, Icon]) => (
               <div key={marker} className="flex items-center gap-3 text-[10px] uppercase tracking-widest font-semibold text-brand-text">
                 <Icon className="w-4 h-4 text-brand-support" />
