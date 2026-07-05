@@ -4,8 +4,23 @@ import { loginToDirectus, updateDirectusSingleton } from '../lib/directus';
 import { defaultGlobalSettings, defaultSiteTheme } from '../lib/site-defaults';
 import type { GlobalSettings, SiteTheme } from '../types';
 
+export type VisualElementOverride = {
+  text?: string;
+  color?: string;
+  fontSize?: string;
+  fontWeight?: string;
+  fontStyle?: string;
+  letterSpacing?: string;
+  textTransform?: string;
+};
+
 type SiteEditorContextValue = {
   editorEnabled: boolean;
+  setEditorEnabled: (enabled: boolean) => void;
+  elementOverrides: Record<string, VisualElementOverride>;
+  updateElementOverride: (selector: string, patch: Partial<VisualElementOverride>) => void;
+  removeElementOverride: (selector: string) => void;
+  resetElementOverrides: () => void;
   settings: GlobalSettings;
   theme: SiteTheme;
   isAuthenticated: boolean;
@@ -24,6 +39,8 @@ type SiteEditorContextValue = {
 
 const SiteEditorContext = createContext<SiteEditorContextValue | null>(null);
 const SESSION_STORAGE_TOKEN_KEY = 'site-editor-token';
+const LOCAL_STORAGE_EDITOR_KEY = 'site-editor-enabled';
+const LOCAL_STORAGE_ELEMENT_OVERRIDES_KEY = 'site-editor-element-overrides';
 
 const applyTheme = (theme: SiteTheme) => {
   const root = document.documentElement;
@@ -35,6 +52,7 @@ const applyTheme = (theme: SiteTheme) => {
   root.style.setProperty('--editor-color-brand-muted', theme.brandMuted);
   root.style.setProperty('--editor-color-brand-border', theme.brandBorder);
   root.style.setProperty('--editor-color-brand-dark', theme.brandDark);
+  root.style.setProperty('--editor-color-brand-support', theme.brandSupport);
   root.style.setProperty('--editor-color-brand-accent', theme.brandAccent);
   root.style.setProperty('--editor-color-brand-accent-hover', theme.brandAccentHover);
   root.style.setProperty('--editor-display-size-max', `${theme.displayTitleMax}px`);
@@ -65,6 +83,7 @@ const mapThemePayload = (theme: SiteTheme) => ({
   brand_muted: theme.brandMuted,
   brand_border: theme.brandBorder,
   brand_dark: theme.brandDark,
+  brand_support: theme.brandSupport,
   brand_accent: theme.brandAccent,
   brand_accent_hover: theme.brandAccentHover,
   display_title_max: theme.displayTitleMax,
@@ -74,6 +93,8 @@ const mapThemePayload = (theme: SiteTheme) => ({
 });
 
 export const SiteEditorProvider = ({ children }: { children: ReactNode }) => {
+  const [editorEnabled, setEditorEnabledState] = useState(false);
+  const [elementOverrides, setElementOverrides] = useState<Record<string, VisualElementOverride>>({});
   const [settings, setSettings] = useState(defaultGlobalSettings);
   const [savedSettings, setSavedSettings] = useState(defaultGlobalSettings);
   const [theme, setTheme] = useState(defaultSiteTheme);
@@ -83,10 +104,26 @@ export const SiteEditorProvider = ({ children }: { children: ReactNode }) => {
   const [authError, setAuthError] = useState<string | null>(null);
   const [saveError, setSaveError] = useState<string | null>(null);
 
-  const editorEnabled =
-    typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('editor') === '1';
-
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const enabledFromQuery = params.get('editor') === '1';
+    const enabledFromStorage = window.localStorage.getItem(LOCAL_STORAGE_EDITOR_KEY) === 'true';
+    const nextEnabled = enabledFromQuery || enabledFromStorage;
+
+    setEditorEnabledState(nextEnabled);
+    if (nextEnabled) {
+      window.localStorage.setItem(LOCAL_STORAGE_EDITOR_KEY, 'true');
+    }
+
+    const savedOverrides = window.localStorage.getItem(LOCAL_STORAGE_ELEMENT_OVERRIDES_KEY);
+    if (savedOverrides) {
+      try {
+        setElementOverrides(JSON.parse(savedOverrides) as Record<string, VisualElementOverride>);
+      } catch {
+        window.localStorage.removeItem(LOCAL_STORAGE_ELEMENT_OVERRIDES_KEY);
+      }
+    }
+
     const savedToken = window.sessionStorage.getItem(SESSION_STORAGE_TOKEN_KEY);
     if (savedToken) {
       setToken(savedToken);
@@ -122,6 +159,45 @@ export const SiteEditorProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     setToken('');
     window.sessionStorage.removeItem(SESSION_STORAGE_TOKEN_KEY);
+  };
+
+  const setEditorEnabled = (enabled: boolean) => {
+    setEditorEnabledState(enabled);
+    if (enabled) {
+      window.localStorage.setItem(LOCAL_STORAGE_EDITOR_KEY, 'true');
+      return;
+    }
+
+    window.localStorage.removeItem(LOCAL_STORAGE_EDITOR_KEY);
+  };
+
+  const updateElementOverride = (selector: string, patch: Partial<VisualElementOverride>) => {
+    setElementOverrides((current) => {
+      const next = {
+        ...current,
+        [selector]: {
+          ...current[selector],
+          ...patch,
+        },
+      };
+
+      window.localStorage.setItem(LOCAL_STORAGE_ELEMENT_OVERRIDES_KEY, JSON.stringify(next));
+      return next;
+    });
+  };
+
+  const removeElementOverride = (selector: string) => {
+    setElementOverrides((current) => {
+      const next = { ...current };
+      delete next[selector];
+      window.localStorage.setItem(LOCAL_STORAGE_ELEMENT_OVERRIDES_KEY, JSON.stringify(next));
+      return next;
+    });
+  };
+
+  const resetElementOverrides = () => {
+    setElementOverrides({});
+    window.localStorage.removeItem(LOCAL_STORAGE_ELEMENT_OVERRIDES_KEY);
   };
 
   const saveSettings = async () => {
@@ -164,6 +240,11 @@ export const SiteEditorProvider = ({ children }: { children: ReactNode }) => {
     <SiteEditorContext.Provider
       value={{
         editorEnabled,
+        setEditorEnabled,
+        elementOverrides,
+        updateElementOverride,
+        removeElementOverride,
+        resetElementOverrides,
         settings,
         theme,
         isAuthenticated: Boolean(token),

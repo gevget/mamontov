@@ -1,13 +1,16 @@
 import { Project, Service, Partner, Testimonial, TeamMember, FAQItem } from '../types';
-import { ArrowUpRight, Plus, Minus } from 'lucide-react';
+import { ArrowUpRight, Plus, Minus, MapPin, Clock3, Sparkles, Ruler, Wrench, BadgeCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { FALLBACK_PROJECT_IMAGE } from '../lib/media';
+
+const serviceFeatureIcons = [Ruler, Wrench, Sparkles, BadgeCheck];
 
 export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => (
   <Link to={`/projects/${project.id}`} className="group block overflow-hidden">
     <div className="relative aspect-[4/5] overflow-hidden mb-6">
-      <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+      <img src={project.image || FALLBACK_PROJECT_IMAGE} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
       <div className="absolute inset-0 bg-brand-dark/0 group-hover:bg-brand-dark/10 transition-colors duration-500" />
     </div>
     <div className="space-y-4">
@@ -20,10 +23,15 @@ export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => (
           <ArrowUpRight className="w-4 h-4" />
         </div>
       </div>
-      <div className="flex gap-6 text-[10px] uppercase tracking-widest text-brand-muted font-semibold">
-        <span>{project.location}</span>
-        <span className="text-brand-accent">/</span>
-        <span>{project.duration}</span>
+      <div className="flex flex-wrap gap-4 text-[10px] uppercase tracking-widest text-brand-muted font-semibold">
+        <span className="inline-flex items-center gap-2">
+          <MapPin className="h-3.5 w-3.5 text-brand-support" />
+          {project.location}
+        </span>
+        <span className="inline-flex items-center gap-2">
+          <Clock3 className="h-3.5 w-3.5 text-brand-support" />
+          {project.duration}
+        </span>
       </div>
     </div>
   </Link>
@@ -47,14 +55,16 @@ export const ServiceCard: React.FC<{ service: Service }> = ({ service }) => (
       <ul className="space-y-3">
         {service.features.map((feature, i) => (
           <li key={i} className="flex items-center gap-3 text-[10px] uppercase tracking-widest text-brand-text/70">
-            <span className="w-1.5 h-1.5 rounded-full bg-brand-accent" />
+            {React.createElement(serviceFeatureIcons[i % serviceFeatureIcons.length], {
+              className: 'w-3.5 h-3.5 text-brand-support',
+            })}
             {feature}
           </li>
         ))}
       </ul>
       <div className="flex items-center gap-3 text-[10px] uppercase tracking-widest font-bold group-hover:gap-5 transition-all">
         <span>Подробнее</span>
-        <ArrowUpRight className="w-4 h-4 text-brand-accent" />
+        <ArrowUpRight className="w-4 h-4 text-brand-support" />
       </div>
     </div>
   </Link>
@@ -76,7 +86,7 @@ export const PartnerCard: React.FC<{ partner: Partner }> = ({ partner }) => (
     <div className="space-y-4">
       <div className="flex justify-between items-start">
         <h3 className="text-xl md:text-2xl font-display font-medium group-hover:text-brand-accent transition-colors">{partner.name}</h3>
-        <ArrowUpRight className="w-4 h-4 text-brand-accent" />
+        <ArrowUpRight className="w-4 h-4 text-brand-support" />
       </div>
       <p className="text-[10px] uppercase tracking-widest text-brand-muted font-bold">{partner.specialization}</p>
       <p className="text-brand-muted font-light leading-relaxed line-clamp-3 pt-2 text-sm">{partner.description}</p>
@@ -92,7 +102,7 @@ export const AccordionItem: React.FC<{ item: FAQItem; isOpen: boolean; onClick: 
   <div className="border-b border-brand-border">
     <button className="w-full py-8 flex justify-between items-center text-left hover:text-brand-accent transition-colors group" onClick={onClick}>
       <h3 className="text-xs font-bold uppercase tracking-widest pr-8 group-hover:text-brand-text transition-colors">{item.question}</h3>
-      <div className="flex-shrink-0 text-brand-accent">{isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}</div>
+      <div className="flex-shrink-0 text-brand-support">{isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}</div>
     </button>
     <AnimatePresence>
       {isOpen && (
@@ -130,7 +140,7 @@ export const TeamRoleCard: React.FC<{ member: TeamMember }> = ({ member }) => (
     <div className="space-y-4 flex-grow">
       <div className="space-y-1">
         <h3 className="text-xl md:text-2xl font-display font-medium group-hover:text-brand-accent transition-colors">{member.name}</h3>
-        <p className="text-[10px] uppercase tracking-widest text-brand-accent font-bold">{member.role}</p>
+        <p className="text-[10px] uppercase tracking-widest text-brand-support font-bold">{member.role}</p>
       </div>
       <p className="text-sm text-brand-muted font-light leading-relaxed">{member.description}</p>
     </div>
@@ -165,7 +175,7 @@ export const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testim
   <div className="p-12 border border-brand-border bg-brand-primary space-y-12 h-full flex flex-col hover:border-brand-accent transition-colors">
     <div className="flex gap-1">
       {[...Array(testimonial.rating)].map((_, i) => (
-        <div key={i} className="w-1.5 h-1.5 bg-brand-accent rounded-full" />
+        <div key={i} className="w-1.5 h-1.5 bg-brand-support rounded-full" />
       ))}
     </div>
     <p className="text-xl md:text-2xl font-light leading-relaxed flex-grow italic">"{testimonial.content}"</p>

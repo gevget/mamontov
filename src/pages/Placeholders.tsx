@@ -17,8 +17,8 @@ export const PageLayout = ({ title, subtitle, children, breadcrumbs = [] }: {
   >
     <Container>
       <Breadcrumbs items={breadcrumbs} />
-      <div className="max-w-4xl mb-20">
-        <h1 className="text-5xl md:text-7xl font-bold mb-8 uppercase tracking-tighter">{title}</h1>
+      <div className="mb-20 max-w-5xl">
+        <h1 className="page-hero-title mb-8 font-bold uppercase tracking-tighter">{title}</h1>
         {subtitle && <p className="text-xl text-brand-muted font-light leading-relaxed">{subtitle}</p>}
       </div>
     </Container>

@@ -113,6 +113,7 @@ export interface SiteTheme {
   brandMuted: string;
   brandBorder: string;
   brandDark: string;
+  brandSupport: string;
   brandAccent: string;
   brandAccentHover: string;
   displayTitleMax: number;

@@ -284,7 +284,7 @@ export const getSiteTheme = async () => {
   try {
     const response = await readDirectusSingleton<DirectusSiteThemeItem>('site_theme', {
       fields:
-        'brand_primary,brand_warm,brand_secondary,brand_text,brand_muted,brand_border,brand_dark,brand_accent,brand_accent_hover,display_title_max,section_title_max,lead_text_size,body_text_size',
+        'brand_primary,brand_warm,brand_secondary,brand_text,brand_muted,brand_border,brand_dark,brand_support,brand_accent,brand_accent_hover,display_title_max,section_title_max,lead_text_size,body_text_size',
     });
 
     if (!response.data) {

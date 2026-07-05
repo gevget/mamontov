@@ -124,14 +124,14 @@ const ensureSingleton = async (token: string, collection: string, payload: Direc
 
 const seedGlobalSettings = async (token: string) => {
   await ensureSingleton(token, 'global_settings', {
-    site_name: 'ARCHIBUILD',
+    site_name: 'МАМОНТОВ - дизайн и ремонт',
     phone: '+7 (999) 123-45-67',
     email: 'hello@archibuild.ru',
     telegram_url: 'https://t.me/archibuild',
     whatsapp_url: 'https://wa.me/79991234567',
     office_address: 'ул. Архитектурная, 10, Москва',
     work_hours: 'Ежедневно с 10:00 до 20:00',
-    hero_title: 'РЕМОНТ КАК СИСТЕМА.',
+    hero_title: 'РЕМОНТ КАК ИСКУССТВО.',
     hero_subtitle:
       'Работаем с квартирами, домами и готовыми дизайн-проектами: считаем смету, ведем процесс по этапам и показываем качество не только на финальных фото, но и внутри ремонта.',
     contact_cta_title: 'Обсудим ваш объект',
@@ -149,6 +149,7 @@ const seedSiteTheme = async (token: string) => {
     brand_muted: '#6D6D6D',
     brand_border: '#E6E2DA',
     brand_dark: '#0D0D0D',
+    brand_support: '#B19B84',
     brand_accent: '#B4DE00',
     brand_accent_hover: '#C5F300',
     display_title_max: 110,

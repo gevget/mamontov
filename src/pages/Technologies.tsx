@@ -2,8 +2,25 @@ import { Container, Section } from '../components/Base';
 import { Breadcrumbs, FAQAccordion } from '../components/Content';
 import { technologyFAQ } from '../data/mock';
 import { motion } from 'motion/react';
-import { CheckCircle2, Settings, Hammer, Ruler, Layers } from 'lucide-react';
+import { CheckCircle2, ClipboardList, Camera, Hammer, Layers, Ruler, Settings, ShieldCheck, Wrench } from 'lucide-react';
 import { LeadForm } from '../components/LeadForm';
+
+const TECHNOLOGY_MARKERS = [
+  ['Скрытые работы', ShieldCheck],
+  ['Инженерия', Settings],
+  ['Чек-листы', ClipboardList],
+  ['Фотоотчёты', Camera],
+] as const;
+
+const CONTROL_AREAS = [
+  ['Черновые работы', 'Подготовка стен, полов и оснований под дальнейшую отделку.', Hammer],
+  ['Инженерные системы', 'Электрика, сантехника, вентиляция и скрытые коммуникации.', Settings],
+  ['Геометрия помещений', 'Контроль плоскостей, углов, примыканий и чистых линий.', Ruler],
+  ['Материалы', 'Подбор и применение решений под задачу, объект и проект.', Layers],
+  ['Чистовая отделка', 'Финишные покрытия, стыки и визуальные детали.', CheckCircle2],
+  ['Приёмка этапов', 'Проверка результата до перехода к следующему этапу.', ClipboardList],
+] as const;
+
 
 export const Technologies = () => {
   return (
@@ -19,9 +36,9 @@ export const Technologies = () => {
             </p>
           </div>
           <div className="grid grid-cols-2 gap-y-6 pb-2">
-            {['Скрытые работы', 'Инженерия', 'Чек-листы', 'Фотоотчёты'].map((marker) => (
+            {TECHNOLOGY_MARKERS.map(([marker, Icon]) => (
               <div key={marker} className="flex items-center gap-3 text-[10px] uppercase tracking-widest font-semibold text-brand-text">
-                <CheckCircle2 className="w-4 h-4 text-brand-accent" />
+                <Icon className="w-4 h-4 text-brand-support" />
                 {marker}
               </div>
             ))}
@@ -32,7 +49,7 @@ export const Technologies = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 items-center">
             <div className="lg:col-span-7 space-y-12">
               <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter leading-tight">Хороший ремонт начинается до чистовой отделки</h2>
-              <div className="w-20 h-[1px] bg-brand-accent" />
+              <div className="w-20 h-[1px] bg-brand-support" />
               <p className="text-xl text-brand-muted font-light leading-relaxed max-w-2xl">
                 Ровные стены, стабильная электрика, грамотно собранная сантехника и подготовленные основания не всегда заметны на фото, но именно они определяют качество и долговечность результата.
               </p>
@@ -52,16 +69,14 @@ export const Technologies = () => {
               <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">Ключевые направления <br />контроля</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-brand-border border border-brand-border">
-              {[
-                ['Черновые работы', 'Подготовка стен, полов и оснований под дальнейшую отделку.'],
-                ['Инженерные системы', 'Электрика, сантехника, вентиляция и скрытые коммуникации.'],
-                ['Геометрия помещений', 'Контроль плоскостей, углов, примыканий и чистых линий.'],
-                ['Материалы', 'Подбор и применение решений под задачу, объект и проект.'],
-                ['Чистовая отделка', 'Финишные покрытия, стыки и визуальные детали.'],
-                ['Приёмка этапов', 'Проверка результата до перехода к следующему этапу.'],
-              ].map(([title, desc], i) => (
+              {CONTROL_AREAS.map(([title, desc, Icon], i) => (
                 <div key={title} className="p-12 bg-brand-primary space-y-6 group hover:bg-brand-warm transition-colors duration-500">
-                  <div className="text-brand-border text-xs font-bold group-hover:text-brand-accent transition-colors">{String(i + 1).padStart(2, '0')}</div>
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="text-brand-border text-xs font-bold group-hover:text-brand-accent transition-colors">{String(i + 1).padStart(2, '0')}</div>
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full border border-brand-border bg-brand-secondary text-brand-support">
+                      <Icon className="h-4 w-4" />
+                    </div>
+                  </div>
                   <div className="space-y-4">
                     <h4 className="text-sm font-bold uppercase tracking-widest">{title}</h4>
                     <p className="text-[10px] text-brand-muted uppercase tracking-widest leading-relaxed">{desc}</p>
@@ -102,7 +117,7 @@ export const Technologies = () => {
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
               <div className="space-y-12">
-                <span className="text-[10px] uppercase tracking-[0.4em] text-brand-accent font-bold">Важная зона контроля</span>
+                <span className="text-[10px] uppercase tracking-[0.4em] text-brand-support font-bold">Важная зона контроля</span>
                 <h2 className="text-4xl md:text-7xl font-bold uppercase tracking-tighter text-brand-primary leading-none">Скрытые работы - <br />зона, где нельзя <br />экономить на контроле</h2>
                 <p className="text-xl text-brand-primary/60 font-light leading-relaxed max-w-xl">
                   После чистовой отделки инженерия, основания и коммуникации уже не видны. Поэтому мы особенно внимательно проверяем их до того, как они будут закрыты материалами.
@@ -110,7 +125,7 @@ export const Technologies = () => {
                 <div className="grid grid-cols-2 gap-8 pt-8">
                   {['Электрика', 'Сантехнические узлы', 'Подготовка стен и полов', 'Скрытые коммуникации'].map((item) => (
                     <div key={item} className="flex items-center gap-3 text-[10px] uppercase tracking-widest font-bold text-brand-primary/80">
-                      <div className="w-1.5 h-1.5 rounded-full bg-brand-accent" />
+                      <ShieldCheck className="h-3.5 w-3.5 text-brand-support" />
                       {item}
                     </div>
                   ))}
@@ -141,7 +156,7 @@ export const Technologies = () => {
                   <ul className="space-y-4">
                     {(items as string[]).map((item) => (
                       <li key={item} className="flex items-start gap-3">
-                        <div className="w-1 h-1 rounded-full bg-brand-border mt-1.5 group-hover:bg-brand-accent transition-colors" />
+                        <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 text-brand-support group-hover:text-brand-accent transition-colors" />
                         <span className="text-[10px] uppercase tracking-widest font-bold">{item}</span>
                       </li>
                     ))}
@@ -169,7 +184,7 @@ export const Technologies = () => {
                   ['расходники и крепёж', Ruler],
                 ].map(([title, Icon]) => (
                   <div key={title as string} className="p-8 border border-brand-border bg-brand-primary space-y-4 hover:border-brand-accent transition-colors cursor-default">
-                    <Icon className="w-6 h-6 text-brand-accent" />
+                    <Icon className="w-6 h-6 text-brand-support" />
                     <h4 className="text-[10px] font-bold uppercase tracking-widest">{title as string}</h4>
                   </div>
                 ))}

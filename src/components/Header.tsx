@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowRight } from 'lucide-react';
-import { Container, Button } from './Base';
+import { Button } from './Base';
 import { motion, AnimatePresence } from 'motion/react';
 import { useModal } from '../context/ModalContext';
 import { useSiteEditor } from '../context/SiteEditorContext';
+import logo from '../../logo.png';
 
 const NAV_LINKS = [
   { name: 'Проекты', href: '/projects' },
@@ -40,12 +41,16 @@ export const Header = () => {
         isScrolled ? 'border-b border-brand-border bg-brand-primary/95 py-4 backdrop-blur-sm' : 'bg-transparent py-8'
       }`}
     >
-      <Container className="flex items-center justify-between">
-        <Link to="/" className="text-xl font-display font-bold tracking-tighter" data-editor-size="body">
-          {settings.siteName || 'ARCHIBUILD'}
+      <div className="flex w-full items-center justify-between gap-8 px-6 md:px-12">
+        <Link to="/" className="flex items-center" aria-label={settings.siteName || 'МАМОНТОВ - дизайн и ремонт'}>
+          <img
+            src={logo}
+            alt={settings.siteName || 'МАМОНТОВ - дизайн и ремонт'}
+            className="h-[36px] w-auto shrink-0 object-contain"
+          />
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden flex-1 items-center justify-center gap-1 lg:flex">
           {NAV_LINKS.map((link) => {
             const isActive = location.pathname === link.href;
             return (
@@ -53,7 +58,9 @@ export const Header = () => {
                 key={link.href}
                 to={link.href}
                 className={`px-4 py-2 text-xs uppercase tracking-widest transition-all duration-300 ${
-                  isActive ? 'rounded-full bg-brand-warm font-semibold text-brand-text' : 'text-brand-muted hover:text-brand-text'
+                  isActive
+                    ? 'rounded-full border border-brand-support/40 bg-brand-support/10 font-semibold text-brand-text'
+                    : 'text-brand-muted hover:text-brand-accent'
                 }`}
               >
                 {link.name}
@@ -71,7 +78,7 @@ export const Header = () => {
         <button className="p-2 text-brand-text lg:hidden" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
-      </Container>
+      </div>
 
       <AnimatePresence>
         {isOpen && (

@@ -2,11 +2,32 @@ import { Container, Section } from '../components/Base';
 import { Breadcrumbs, FAQAccordion, ProjectCard, TeamRoleCard, TestimonialCard } from '../components/Content';
 import { aboutFAQ, projects as mockProjects, teamMembers, testimonials as mockTestimonials } from '../data/mock';
 import { motion } from 'motion/react';
-import { CheckCircle2 } from 'lucide-react';
+import { Building2, CheckCircle2, ClipboardList, HardHat, ShieldCheck, Users2 } from 'lucide-react';
 import { LeadForm } from '../components/LeadForm';
 import { getAboutFaq, getProjects, getTestimonials } from '../lib/api';
 import { useCmsValue } from '../lib/hooks';
 import type { Project, Testimonial } from '../types';
+
+const ABOUT_MARKERS = [
+  ['Команда под объект', Users2],
+  ['Понятная ответственность', ShieldCheck],
+  ['Контроль этапов', ClipboardList],
+  ['Реальные проекты', Building2],
+] as const;
+
+const ABOUT_METRICS = [
+  ['10+', 'лет в ремонте и координации объектов'],
+  ['120+', 'решений по квартирам, домам и дизайнерским проектам'],
+  ['4 этапа', 'понятная структура от замера до сдачи'],
+  ['1 команда', 'единая ответственность за процесс и качество'],
+] as const;
+
+const ABOUT_PRINCIPLES = [
+  ['Сначала разбираемся в задаче', 'Изучаем объект, проект, площадь и исходные ограничения.', Building2],
+  ['Считаем до старта', 'Готовим понятную смету и делим процесс на этапы.', ClipboardList],
+  ['Контролируем реализацию', 'Следим за инженерией, черновыми и чистовыми работами.', HardHat],
+  ['Сдаем результат', 'Проверяем объект, закрываем замечания и передаем итог.', CheckCircle2],
+] as const;
 
 export const About = () => {
   const projects = useCmsValue<Project[]>(getProjects, mockProjects);
@@ -19,17 +40,17 @@ export const About = () => {
       <Container>
         <Breadcrumbs items={[{ name: 'О компании' }]} />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 mb-40 items-end">
+        <div className="page-hero-grid">
           <div className="space-y-8">
-            <h1 className="text-5xl md:text-8xl font-bold uppercase tracking-tighter leading-[0.85]">О компании</h1>
+            <h1 className="page-hero-title font-bold uppercase tracking-tighter">О компании</h1>
             <p className="text-xl text-brand-muted font-light leading-relaxed max-w-xl">
               Мы ведем ремонт как управляемый процесс: от изучения объекта и сметы до контроля скрытых работ, чистовой отделки и сдачи.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-y-6 pb-2 border-b border-brand-border lg:border-none">
-            {['Команда под объект', 'Понятная ответственность', 'Контроль этапов', 'Реальные проекты'].map((marker) => (
+          <div className="page-hero-aside grid grid-cols-2 gap-y-6 border-b border-brand-border pb-2 lg:border-none">
+            {ABOUT_MARKERS.map(([marker, Icon]) => (
               <div key={marker} className="flex items-center gap-3 text-[10px] uppercase tracking-widest font-semibold text-brand-text">
-                <CheckCircle2 className="w-4 h-4 text-brand-accent" />
+                <Icon className="w-4 h-4 text-brand-support" />
                 {marker}
               </div>
             ))}
@@ -40,7 +61,7 @@ export const About = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 items-center">
             <div className="lg:col-span-7 space-y-12">
               <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter leading-tight">За результат отвечает система, а не случай</h2>
-              <div className="w-20 h-[1px] bg-brand-accent" />
+              <div className="w-20 h-[1px] bg-brand-support" />
               <p className="text-xl text-brand-muted font-light leading-relaxed max-w-2xl">
                 Качественный ремонт складывается из проектной документации, сметы, инженерии, дисциплины на площадке и спокойной коммуникации. Поэтому для нас важны не только мастера, но и структура управления проектом.
               </p>
@@ -54,15 +75,35 @@ export const About = () => {
         </Section>
 
         <Section className="py-40 border-t border-brand-border">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+            <div className="lg:col-span-4 space-y-6">
+              <span className="text-[10px] uppercase tracking-[0.3em] text-brand-muted font-bold">Доверие и факты</span>
+              <h2 className="text-4xl md:text-5xl font-bold uppercase tracking-tighter">Показываем не обещания, а структуру работы</h2>
+              <p className="text-lg text-brand-muted font-light leading-relaxed">
+                Для нас важны прогнозируемость, аккуратная коммуникация и понятная зона ответственности. Поэтому на сайте и в работе мы всегда показываем логику процесса.
+              </p>
+            </div>
+            <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-px bg-brand-border border border-brand-border">
+              {ABOUT_METRICS.map(([value, description]) => (
+                <div key={value} className="bg-brand-primary p-10 md:p-12 space-y-4">
+                  <p className="text-4xl md:text-5xl font-bold uppercase tracking-tight text-brand-support">{value}</p>
+                  <p className="text-[11px] uppercase tracking-[0.22em] text-brand-muted leading-relaxed">{description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Section>
+
+        <Section className="py-40 border-t border-brand-border">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-brand-border border border-brand-border">
-            {[
-              ['Сначала разбираемся в задаче', 'Изучаем объект, проект, площадь и исходные ограничения.'],
-              ['Считаем до старта', 'Готовим понятную смету и делим процесс на этапы.'],
-              ['Контролируем реализацию', 'Следим за инженерией, черновыми и чистовыми работами.'],
-              ['Сдаем результат', 'Проверяем объект, закрываем замечания и передаем итог.'],
-            ].map(([title, desc], index) => (
+            {ABOUT_PRINCIPLES.map(([title, desc, Icon], index) => (
               <div key={title} className="p-12 bg-brand-primary space-y-8 group hover:bg-brand-warm transition-colors duration-500">
-                <div className="text-4xl font-bold text-brand-border group-hover:text-brand-accent transition-colors">{String(index + 1).padStart(2, '0')}</div>
+                <div className="flex items-center justify-between gap-4">
+                  <div className="text-4xl font-bold text-brand-border group-hover:text-brand-accent transition-colors">{String(index + 1).padStart(2, '0')}</div>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-brand-border bg-brand-secondary text-brand-support">
+                    <Icon className="h-4 w-4" />
+                  </div>
+                </div>
                 <div className="space-y-4">
                   <h4 className="text-sm font-bold uppercase tracking-widest leading-tight">{title}</h4>
                   <p className="text-[10px] text-brand-muted uppercase tracking-widest leading-relaxed">{desc}</p>

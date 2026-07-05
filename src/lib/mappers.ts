@@ -93,7 +93,10 @@ export const mapDirectusProject = (item: DirectusProjectItem): Project => ({
   id: item.slug || item.id,
   title: item.title,
   category: item.category || '',
-  image: buildDirectusAssetUrl(item.hero_image) || '',
+  image:
+    buildDirectusAssetUrl(item.hero_image) ||
+    resolveGalleryImage(parseJsonValue(item.gallery, [] as NonNullable<Exclude<DirectusProjectItem['gallery'], string>>)[0]) ||
+    '',
   description: item.full_description || item.short_description || '',
   year: item.year || '',
   location: item.location || '',
@@ -136,7 +139,7 @@ export const mapDirectusProject = (item: DirectusProjectItem): Project => ({
 });
 
 export const mapDirectusGlobalSettings = (item: DirectusGlobalSettingsItem): GlobalSettings => ({
-  siteName: item.site_name || 'ARCHIBUILD',
+  siteName: item.site_name || 'МАМОНТОВ - дизайн и ремонт',
   phone: item.phone || '+7 (999) 123-45-67',
   email: item.email || 'hello@archibuild.ru',
   telegramUrl: item.telegram_url || undefined,
@@ -157,6 +160,7 @@ export const mapDirectusSiteTheme = (item: DirectusSiteThemeItem): SiteTheme => 
   brandMuted: item.brand_muted || defaultSiteTheme.brandMuted,
   brandBorder: item.brand_border || defaultSiteTheme.brandBorder,
   brandDark: item.brand_dark || defaultSiteTheme.brandDark,
+  brandSupport: item.brand_support || defaultSiteTheme.brandSupport,
   brandAccent: item.brand_accent || defaultSiteTheme.brandAccent,
   brandAccentHover: item.brand_accent_hover || defaultSiteTheme.brandAccentHover,
   displayTitleMax: item.display_title_max || defaultSiteTheme.displayTitleMax,

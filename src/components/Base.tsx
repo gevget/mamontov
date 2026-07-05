@@ -15,7 +15,7 @@ export const Section = ({ children, className = '', id }: { children: ReactNode,
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  variant?: 'primary' | 'secondary' | 'pill' | 'ghost' | 'outline' | 'accent';
+  variant?: 'primary' | 'secondary' | 'pill' | 'ghost' | 'outline' | 'accent' | 'support';
   href?: string;
   to?: string;
   className?: string;
@@ -40,9 +40,10 @@ export const Button = ({
   const variants = {
     primary: 'bg-brand-dark text-brand-primary px-10 py-5 hover:bg-brand-accent hover:text-brand-dark',
     accent: 'bg-brand-accent text-brand-dark px-10 py-5 hover:bg-brand-accent-hover',
-    secondary: 'border border-brand-border text-brand-text px-10 py-5 hover:bg-brand-warm',
-    outline: 'border border-brand-border text-brand-text px-10 py-5 hover:bg-brand-dark hover:text-brand-primary',
-    pill: 'bg-brand-warm text-brand-text px-8 py-3 rounded-full border border-brand-border hover:border-brand-accent transition-colors',
+    support: 'bg-brand-support text-brand-dark px-10 py-5 hover:bg-brand-accent hover:text-brand-dark',
+    secondary: 'border border-brand-border text-brand-text px-10 py-5 hover:border-brand-accent hover:text-brand-accent',
+    outline: 'border border-brand-border text-brand-text px-10 py-5 hover:border-brand-accent hover:bg-brand-warm hover:text-brand-accent',
+    pill: 'bg-brand-warm text-brand-text px-8 py-3 rounded-full border border-brand-border hover:border-brand-accent hover:text-brand-accent transition-colors',
     ghost: 'text-brand-text hover:text-brand-accent transition-colors px-4 py-2'
   };
 

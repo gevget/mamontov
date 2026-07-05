@@ -9,6 +9,7 @@
   --editor-color-brand-muted: #6D6D6D;
   --editor-color-brand-border: #E6E2DA;
   --editor-color-brand-dark: #0D0D0D;
+  --editor-color-brand-support: #B19B84;
   --editor-color-brand-accent: #B4DE00;
   --editor-color-brand-accent-hover: #C5F300;
   --editor-display-size-max: 110px;
@@ -28,6 +29,7 @@
   --color-brand-muted: var(--editor-color-brand-muted);
   --color-brand-border: var(--editor-color-brand-border);
   --color-brand-dark: var(--editor-color-brand-dark);
+  --color-brand-support: var(--editor-color-brand-support);
   --color-brand-accent: var(--editor-color-brand-accent);
   --color-brand-accent-hover: var(--editor-color-brand-accent-hover);
 }
@@ -57,4 +59,62 @@
 
 [data-editor-size="body"] {
   font-size: var(--editor-body-size) !important;
+}
+
+.page-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 5rem;
+  margin-bottom: 10rem;
+  align-items: end;
+}
+
+.page-hero-title {
+  font-size: clamp(3.5rem, 6vw, 6.5rem);
+  line-height: 0.92;
+  max-width: 11ch;
+  text-wrap: balance;
+}
+
+.page-hero-aside {
+  align-self: end;
+}
+
+.text-5xl.md\:text-8xl.font-bold.uppercase.tracking-tighter.leading-\[0\.85\],
+.text-5xl.md\:text-7xl.font-bold.uppercase.tracking-tighter.leading-none,
+.text-6xl.md\:text-9xl.font-bold.uppercase.tracking-tighter.leading-\[0\.8\],
+.text-5xl.md\:text-7xl.font-bold.mb-8.uppercase.tracking-tighter {
+  font-size: clamp(3.5rem, 6vw, 6.5rem);
+  line-height: 0.92;
+  max-width: 11ch;
+  text-wrap: balance;
+}
+
+.grid.grid-cols-1.lg\:grid-cols-2.gap-20.mb-40.items-end,
+.grid.grid-cols-1.lg\:grid-cols-2.gap-20.mb-32.items-end {
+  align-items: end;
+}
+
+@media (min-width: 1024px) {
+  .page-hero-grid {
+    grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+  }
+
+  .page-hero-aside {
+    justify-self: end;
+    width: 100%;
+    max-width: 24rem;
+  }
+
+  .grid.grid-cols-1.lg\:grid-cols-2.gap-20.mb-40.items-end,
+  .grid.grid-cols-1.lg\:grid-cols-2.gap-20.mb-32.items-end {
+    grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+  }
+
+  .grid.grid-cols-2.gap-y-6.pb-2,
+  .grid.grid-cols-2.gap-y-6.border-b.border-brand-border.pb-2.lg\:border-none {
+    justify-self: end;
+    width: 100%;
+    max-width: 24rem;
+  }
 }

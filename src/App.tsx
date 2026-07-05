@@ -23,6 +23,8 @@ import { ModalProvider } from './context/ModalContext';
 import { SiteEditorProvider } from './context/SiteEditorContext';
 import { LeadModal } from './components/LeadModal';
 import { VisualEditor } from './components/VisualEditor';
+import { EditorLauncher } from './components/EditorLauncher';
+import { InlineVisualEditor } from './components/InlineVisualEditor';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -63,6 +65,8 @@ export default function App() {
             <Footer />
           </div>
           <LeadModal />
+          <EditorLauncher />
+          <InlineVisualEditor />
           <VisualEditor />
         </SiteEditorProvider>
       </Router>

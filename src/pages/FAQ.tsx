@@ -2,11 +2,18 @@ import { Container, Section, Button } from '../components/Base';
 import { Breadcrumbs, FAQAccordion } from '../components/Content';
 import { generalFAQ } from '../data/mock';
 import { motion } from 'motion/react';
-import { CheckCircle2, MessageCircle } from 'lucide-react';
+import { CircleHelp, FileText, MessageCircle, MessagesSquare, WalletCards } from 'lucide-react';
 import { useState } from 'react';
 import { useModal } from '../context/ModalContext';
 import { getGeneralFaqGroups } from '../lib/api';
 import { useCmsValue } from '../lib/hooks';
+
+const FAQ_MARKERS = [
+  ['Короткие ответы', CircleHelp],
+  ['Без рекламного шума', FileText],
+  ['Про смету и процесс', WalletCards],
+  ['Можно уточнить лично', MessagesSquare],
+] as const;
 
 export const FAQ = () => {
   const { openModal } = useModal();
@@ -25,11 +32,14 @@ export const FAQ = () => {
             <p className="text-xl text-brand-muted font-light leading-relaxed max-w-xl">
               Собрали основные вопросы о стоимости, сроках, смете, дизайн-проектах, контроле качества и работе с изменениями.
             </p>
+            <div className="aspect-[4/3] max-w-xl overflow-hidden bg-brand-warm">
+              <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=1200" alt="Обсуждение проекта" className="h-full w-full object-cover" referrerPolicy="no-referrer" />
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-y-6 pb-2 border-b border-brand-border lg:border-none">
-            {['Короткие ответы', 'Без рекламного шума', 'Про смету и процесс', 'Можно уточнить лично'].map((marker) => (
+            {FAQ_MARKERS.map(([marker, Icon]) => (
               <div key={marker} className="flex items-center gap-3 text-[10px] uppercase tracking-widest font-semibold text-brand-text">
-                <CheckCircle2 className="w-4 h-4 text-brand-accent" />
+                <Icon className="w-4 h-4 text-brand-support" />
                 {marker}
               </div>
             ))}
@@ -42,11 +52,17 @@ export const FAQ = () => {
               <div className="sticky top-40 space-y-4">
                 <span className="text-[8px] uppercase tracking-[0.3em] text-brand-muted font-bold block mb-8">Категории</span>
                 <nav className="flex flex-col gap-2">
-                  {categories.map((category) => (
-                    <button key={category} onClick={() => setActiveCategory(category)} className={`text-left py-4 px-6 border transition-all text-[10px] uppercase tracking-widest font-bold ${activeCategory === category ? 'bg-brand-dark border-brand-dark text-brand-primary' : 'border-brand-border text-brand-muted hover:border-brand-accent'}`}>
-                      {category}
-                    </button>
-                  ))}
+                  {categories.map((category, index) => {
+                    const icons = [CircleHelp, WalletCards, FileText, MessagesSquare];
+                    const Icon = icons[index % icons.length];
+
+                    return (
+                      <button key={category} onClick={() => setActiveCategory(category)} className={`flex items-center gap-3 text-left py-4 px-6 border transition-all text-[10px] uppercase tracking-widest font-bold ${activeCategory === category ? 'bg-brand-support border-brand-support text-brand-dark' : 'border-brand-border text-brand-muted hover:border-brand-accent hover:text-brand-accent'}`}>
+                        <Icon className="h-4 w-4" />
+                        <span>{category}</span>
+                      </button>
+                    );
+                  })}
                 </nav>
               </div>
             </div>
@@ -55,7 +71,7 @@ export const FAQ = () => {
               {categories.map((category) => (
                 <div key={category} className={`space-y-12 transition-opacity duration-500 ${activeCategory === category ? 'opacity-100' : 'opacity-40 lg:opacity-20'}`}>
                   <div className="flex items-center gap-6">
-                    <div className="w-12 h-[1px] bg-brand-accent" />
+                    <div className="w-12 h-[1px] bg-brand-support" />
                     <h2 className="text-2xl font-bold uppercase tracking-tighter">{category}</h2>
                   </div>
                   <FAQAccordion items={groupedFaq[category]} />
@@ -69,7 +85,7 @@ export const FAQ = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div className="space-y-8">
               <div className="w-16 h-16 bg-brand-warm rounded-full flex items-center justify-center">
-                <MessageCircle className="w-8 h-8 text-brand-accent" />
+                <MessageCircle className="w-8 h-8 text-brand-support" />
               </div>
               <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter leading-none">Остались вопросы <br />по вашему объекту?</h2>
               <p className="text-lg text-brand-muted font-light leading-relaxed max-w-xl">
@@ -77,6 +93,9 @@ export const FAQ = () => {
               </p>
             </div>
             <div className="flex flex-col gap-6 items-start lg:items-end">
+              <div className="aspect-[4/3] w-full max-w-md overflow-hidden bg-brand-warm">
+                <img src="https://images.unsplash.com/photo-1556155092-490a1ba16284?auto=format&fit=crop&q=80&w=1200" alt="Консультация по ремонту" className="h-full w-full object-cover" referrerPolicy="no-referrer" />
+              </div>
               <Button variant="accent" className="!px-16 !py-6" onClick={() => openModal('question')}>
                 Задать вопрос
               </Button>

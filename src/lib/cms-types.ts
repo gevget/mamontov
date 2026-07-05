@@ -125,6 +125,7 @@ export interface DirectusSiteThemeItem {
   brand_muted?: string | null;
   brand_border?: string | null;
   brand_dark?: string | null;
+  brand_support?: string | null;
   brand_accent?: string | null;
   brand_accent_hover?: string | null;
   display_title_max?: number | null;

@@ -1,11 +1,87 @@
 import { FormEvent, useState } from 'react';
 import { LogIn, LogOut, Palette, RotateCcw, Save, Settings2, Type, X } from 'lucide-react';
 import { useSiteEditor } from '../context/SiteEditorContext';
+import { defaultGlobalSettings, defaultSiteTheme } from '../lib/site-defaults';
 import type { SiteTheme } from '../types';
 
 type EditorTab = 'texts' | 'theme';
 
 const numberValue = (value: string) => Number.parseInt(value, 10) || 0;
+
+const textPresets = [
+  {
+    id: 'signature',
+    label: 'Signature',
+    description: 'Более статусная подача первого экрана и CTA.',
+    values: {
+      heroTitle: defaultGlobalSettings.heroTitle,
+      heroSubtitle: defaultGlobalSettings.heroSubtitle,
+      contactCtaTitle: defaultGlobalSettings.contactCtaTitle,
+      contactCtaText: defaultGlobalSettings.contactCtaText,
+    },
+  },
+  {
+    id: 'strict',
+    label: 'Strict',
+    description: 'Больше акцента на управляемость, сроки и смету.',
+    values: {
+      heroTitle: 'РЕМОНТ КАК ИСКУССТВО.',
+      heroSubtitle: 'Ведем квартиры, дома и дизайнерские объекты как понятный проект: считаем бюджет, координируем этапы и держим качество под контролем.',
+      contactCtaTitle: 'Обсудим ваш объект',
+      contactCtaText: 'Расскажите о площади, формате и стадии проекта. Подскажем следующий шаг и подготовим ориентир по работам.',
+    },
+  },
+  {
+    id: 'editorial',
+    label: 'Editorial',
+    description: 'Более атмосферная подача с упором на детали интерьера.',
+    values: {
+      heroTitle: 'РЕМОНТ КАК ИСКУССТВО.',
+      heroSubtitle: 'Создаем спокойные, точные интерьеры и доводим реализацию до деталей: от инженерии и сметы до света, фактур и чистовой отделки.',
+      contactCtaTitle: 'Начнем с диалога',
+      contactCtaText: 'Можно прийти с идеей, объектом или готовым проектом. Поможем собрать реалистичный сценарий работ и запуска.',
+    },
+  },
+] as const;
+
+const themePresets = [
+  {
+    id: 'default',
+    label: 'Classic',
+    description: 'Текущая фирменная палитра и стандартные размеры.',
+    values: defaultSiteTheme,
+  },
+  {
+    id: 'airy',
+    label: 'Airy',
+    description: 'Чуть больше воздуха и спокойнее типографика.',
+    values: {
+      ...defaultSiteTheme,
+      brandWarm: '#F8F5EF',
+      brandSecondary: '#F3EFE7',
+      displayTitleMax: 118,
+      sectionTitleMax: 68,
+      leadTextSize: 21,
+      bodyTextSize: 17,
+    },
+  },
+  {
+    id: 'contrast',
+    label: 'Contrast',
+    description: 'Чуть плотнее контраст и более собранный ритм.',
+    values: {
+      ...defaultSiteTheme,
+      brandPrimary: '#FCFBF8',
+      brandWarm: '#F2EEE6',
+      brandSecondary: '#ECE7DE',
+      brandBorder: '#DDD6CA',
+      displayTitleMax: 104,
+      sectionTitleMax: 60,
+      leadTextSize: 19,
+      bodyTextSize: 16,
+    },
+  },
+] as const;
 
 export const VisualEditor = () => {
   const {
@@ -25,7 +101,7 @@ export const VisualEditor = () => {
     saveSettings,
     saveTheme,
   } = useSiteEditor();
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [tab, setTab] = useState<EditorTab>('texts');
   const [email, setEmail] = useState('admin@example.com');
   const [password, setPassword] = useState('change-me-please');
@@ -45,6 +121,7 @@ export const VisualEditor = () => {
         <button
           type="button"
           onClick={() => setIsOpen(true)}
+          data-inline-editor-ui="true"
           className="fixed right-6 bottom-6 z-[70] flex items-center gap-3 rounded-full bg-brand-dark px-5 py-3 text-[10px] font-bold uppercase tracking-[0.3em] text-brand-primary shadow-2xl"
         >
           <Settings2 className="h-4 w-4" />
@@ -53,7 +130,7 @@ export const VisualEditor = () => {
       )}
 
       {isOpen && (
-        <aside className="fixed right-0 top-0 z-[80] flex h-screen w-full max-w-md flex-col border-l border-brand-border bg-brand-primary shadow-2xl">
+        <aside data-inline-editor-ui="true" className="fixed right-0 top-0 z-[80] flex h-screen w-full max-w-md flex-col border-l border-brand-border bg-brand-primary shadow-2xl">
           <div className="flex items-center justify-between border-b border-brand-border px-6 py-5">
             <div>
               <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-brand-accent">Visual Editor</p>
@@ -131,6 +208,26 @@ export const VisualEditor = () => {
           <div className="flex-1 space-y-6 overflow-y-auto px-6 py-6">
             {tab === 'texts' ? (
               <>
+                <div className="space-y-3 border border-brand-border bg-brand-warm p-4">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-brand-muted">Пресеты текста</span>
+                  <div className="grid grid-cols-1 gap-3">
+                    {textPresets.map((preset) => (
+                      <button
+                        key={preset.id}
+                        type="button"
+                        onClick={() => updateSettings(preset.values)}
+                        className="space-y-2 border border-brand-border bg-brand-primary px-4 py-3 text-left transition-colors hover:bg-brand-secondary"
+                      >
+                        <div className="flex items-center justify-between gap-3">
+                          <span className="text-[10px] font-bold uppercase tracking-[0.3em]">{preset.label}</span>
+                          <span className="text-[10px] uppercase tracking-[0.2em] text-brand-support">Apply</span>
+                        </div>
+                        <p className="text-xs text-brand-muted leading-relaxed">{preset.description}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 <label className="block space-y-2">
                   <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-brand-muted">Название сайта</span>
                   <input value={settings.siteName} onChange={(event) => updateSettings({ siteName: event.target.value })} className="w-full border border-brand-border px-4 py-3 text-sm outline-none" />
@@ -170,6 +267,29 @@ export const VisualEditor = () => {
               </>
             ) : (
               <>
+                <div className="space-y-3 border border-brand-border bg-brand-warm p-4">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-brand-muted">Пресеты темы</span>
+                  <div className="grid grid-cols-1 gap-3">
+                    {themePresets.map((preset) => (
+                      <button
+                        key={preset.id}
+                        type="button"
+                        onClick={() => updateTheme(preset.values)}
+                        className="space-y-2 border border-brand-border bg-brand-primary px-4 py-3 text-left transition-colors hover:bg-brand-secondary"
+                      >
+                        <div className="flex items-center justify-between gap-3">
+                          <span className="text-[10px] font-bold uppercase tracking-[0.3em]">{preset.label}</span>
+                          <div className="flex items-center gap-2">
+                            <span className="h-3 w-3 rounded-full border border-brand-border" style={{ backgroundColor: preset.values.brandSupport }} />
+                            <span className="h-3 w-3 rounded-full border border-brand-border" style={{ backgroundColor: preset.values.brandAccent }} />
+                          </div>
+                        </div>
+                        <p className="text-xs text-brand-muted leading-relaxed">{preset.description}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 {[
                   ['brandPrimary', 'Фон основной'],
                   ['brandWarm', 'Фон теплый'],
@@ -178,6 +298,7 @@ export const VisualEditor = () => {
                   ['brandMuted', 'Текст muted'],
                   ['brandBorder', 'Границы'],
                   ['brandDark', 'Темный фон'],
+                  ['brandSupport', 'Support accent'],
                   ['brandAccent', 'Accent'],
                   ['brandAccentHover', 'Accent hover'],
                 ].map(([key, label]) => (

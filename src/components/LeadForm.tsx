@@ -24,15 +24,15 @@ export const PartnerLeadForm = () => {
       <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }} className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-2">
           <label className="text-[10px] uppercase tracking-widest text-brand-muted font-bold">Ваше имя</label>
-          <input required type="text" placeholder="Имя Фамилия" className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-accent transition-colors font-light" />
+          <input required type="text" placeholder="Имя Фамилия" className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-support transition-colors font-light" />
         </div>
         <div className="space-y-2">
           <label className="text-[10px] uppercase tracking-widest text-brand-muted font-bold">Телефон</label>
-          <input required type="tel" placeholder="+7 (___) ___-__-__" className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-accent transition-colors font-light" />
+          <input required type="tel" placeholder="+7 (___) ___-__-__" className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-support transition-colors font-light" />
         </div>
         <div className="space-y-2">
           <label className="text-[10px] uppercase tracking-widest text-brand-muted font-bold">Ваша роль</label>
-          <select className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-accent transition-colors font-light appearance-none cursor-pointer">
+          <select className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-support transition-colors font-light appearance-none cursor-pointer">
             <option>Дизайнер</option>
             <option>Архитектор</option>
             <option>Студия</option>
@@ -41,11 +41,11 @@ export const PartnerLeadForm = () => {
         </div>
         <div className="space-y-2">
           <label className="text-[10px] uppercase tracking-widest text-brand-muted font-bold">Ссылка на портфолио</label>
-          <input type="url" placeholder="https://..." className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-accent transition-colors font-light" />
+          <input type="url" placeholder="https://..." className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-support transition-colors font-light" />
         </div>
         <div className="space-y-2 md:col-span-2">
           <label className="text-[10px] uppercase tracking-widest text-brand-muted font-bold">Комментарий</label>
-          <textarea rows={4} placeholder="Расскажите о проекте или формате сотрудничества..." className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-accent transition-colors font-light resize-none" />
+          <textarea rows={4} placeholder="Расскажите о проекте или формате сотрудничества..." className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-support transition-colors font-light resize-none" />
         </div>
         <div className="md:col-span-2 pt-8">
           <Button variant="accent" className="w-full md:w-auto" type="submit">Отправить заявку</Button>
@@ -68,15 +68,15 @@ export const LeadForm = () => {
       <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }} className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-2">
           <label className="text-[10px] uppercase tracking-widest text-brand-muted font-bold">Ваше имя</label>
-          <input required type="text" placeholder="Имя Фамилия" className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-accent transition-colors font-light" />
+          <input required type="text" placeholder="Имя Фамилия" className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-support transition-colors font-light" />
         </div>
         <div className="space-y-2">
           <label className="text-[10px] uppercase tracking-widest text-brand-muted font-bold">Телефон</label>
-          <input required type="tel" placeholder="+7 (___) ___-__-__" className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-accent transition-colors font-light" />
+          <input required type="tel" placeholder="+7 (___) ___-__-__" className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-support transition-colors font-light" />
         </div>
         <div className="space-y-2">
           <label className="text-[10px] uppercase tracking-widest text-brand-muted font-bold">Тип объекта</label>
-          <select className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-accent transition-colors font-light appearance-none cursor-pointer">
+          <select className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-support transition-colors font-light appearance-none cursor-pointer">
             <option>Квартира</option>
             <option>Частный дом</option>
             <option>Коммерческое помещение</option>
@@ -84,11 +84,11 @@ export const LeadForm = () => {
         </div>
         <div className="space-y-2">
           <label className="text-[10px] uppercase tracking-widest text-brand-muted font-bold">Площадь (м2)</label>
-          <input type="number" placeholder="80" className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-accent transition-colors font-light" />
+          <input type="number" placeholder="80" className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-support transition-colors font-light" />
         </div>
         <div className="space-y-2 md:col-span-2">
           <label className="text-[10px] uppercase tracking-widest text-brand-muted font-bold">Комментарий</label>
-          <textarea rows={4} placeholder="Опишите пожелания, сроки и исходные данные..." className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-accent transition-colors font-light resize-none" />
+          <textarea rows={4} placeholder="Опишите пожелания, сроки и исходные данные..." className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-support transition-colors font-light resize-none" />
         </div>
         <div className="md:col-span-2 pt-8">
           <Button variant="accent" className="w-full md:w-auto" type="submit">Получить смету</Button>
@@ -111,15 +111,15 @@ export const ContactForm = () => {
       <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }} className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-2">
           <label className="text-[10px] uppercase tracking-widest text-brand-muted font-bold">Имя</label>
-          <input required type="text" placeholder="Имя Фамилия" className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-accent transition-colors font-light" />
+          <input required type="text" placeholder="Имя Фамилия" className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-support transition-colors font-light" />
         </div>
         <div className="space-y-2">
           <label className="text-[10px] uppercase tracking-widest text-brand-muted font-bold">Телефон</label>
-          <input required type="tel" placeholder="+7 (___) ___-__-__" className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-accent transition-colors font-light" />
+          <input required type="tel" placeholder="+7 (___) ___-__-__" className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-support transition-colors font-light" />
         </div>
         <div className="space-y-2">
           <label className="text-[10px] uppercase tracking-widest text-brand-muted font-bold">Удобный канал связи</label>
-          <select className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-accent transition-colors font-light appearance-none cursor-pointer">
+          <select className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-support transition-colors font-light appearance-none cursor-pointer">
             <option>Telegram</option>
             <option>WhatsApp</option>
             <option>Звонок</option>
@@ -127,7 +127,7 @@ export const ContactForm = () => {
         </div>
         <div className="space-y-2">
           <label className="text-[10px] uppercase tracking-widest text-brand-muted font-bold">Тип объекта</label>
-          <select className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-accent transition-colors font-light appearance-none cursor-pointer">
+          <select className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-support transition-colors font-light appearance-none cursor-pointer">
             <option>Квартира</option>
             <option>Частный дом</option>
             <option>Другое</option>
@@ -135,11 +135,11 @@ export const ContactForm = () => {
         </div>
         <div className="space-y-2">
           <label className="text-[10px] uppercase tracking-widest text-brand-muted font-bold">Площадь (м2)</label>
-          <input type="number" placeholder="80" className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-accent transition-colors font-light" />
+          <input type="number" placeholder="80" className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-support transition-colors font-light" />
         </div>
         <div className="space-y-2">
           <label className="text-[10px] uppercase tracking-widest text-brand-muted font-bold">Есть ли проект?</label>
-          <select className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-accent transition-colors font-light appearance-none cursor-pointer">
+          <select className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-support transition-colors font-light appearance-none cursor-pointer">
             <option>Да, есть</option>
             <option>В процессе</option>
             <option>Нет</option>
@@ -147,7 +147,7 @@ export const ContactForm = () => {
         </div>
         <div className="space-y-2 md:col-span-2">
           <label className="text-[10px] uppercase tracking-widest text-brand-muted font-bold">Комментарий</label>
-          <textarea rows={4} placeholder="Опишите задачу, текущий статус объекта и ваши вопросы..." className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-accent transition-colors font-light resize-none" />
+          <textarea rows={4} placeholder="Опишите задачу, текущий статус объекта и ваши вопросы..." className="w-full bg-transparent border-b border-brand-border py-4 focus:outline-none focus:border-brand-support transition-colors font-light resize-none" />
         </div>
         <div className="md:col-span-2 pt-8">
           <Button variant="accent" className="w-full md:w-auto" type="submit">Отправить заявку</Button>

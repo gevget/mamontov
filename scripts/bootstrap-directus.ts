@@ -128,6 +128,7 @@ const collections: CollectionDefinition[] = [
       { field: 'brand_muted', type: 'string', interface: 'input' },
       { field: 'brand_border', type: 'string', interface: 'input' },
       { field: 'brand_dark', type: 'string', interface: 'input' },
+      { field: 'brand_support', type: 'string', interface: 'input' },
       { field: 'brand_accent', type: 'string', interface: 'input' },
       { field: 'brand_accent_hover', type: 'string', interface: 'input' },
       { field: 'display_title_max', type: 'integer', interface: 'input' },
